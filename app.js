@@ -86,7 +86,7 @@ xhttp.onreadystatechange = function () {
         const rwys = rwyParser(lastMetar);
 
         if (rwys) {
-            document.getElementById("rwys").innerHTML = `${rwys[0]} (dep) / ${rwys[1]} (arr)`;
+            document.getElementById("rwys").innerHTML = `RWY ${rwys[0]} (dep) / RWY ${rwys[1]} (arr)`;
         }
     }
 };
