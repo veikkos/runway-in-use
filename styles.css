@@ -25,3 +25,7 @@ body, html {
 .metar {
     font-size: 140%;
 }
+
+.font {
+    font-family: 'Signika', sans-serif;
+}
