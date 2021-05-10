@@ -3,43 +3,63 @@ const xhttp = new XMLHttpRequest();
 const maxCrossWindComponent = 20;
 const maxTailWindComponent = 5;
 
+const rwys = new Map([
+    ["15", { course: 145, crossing: ["22L", "04R"] }],
+    ["22L", { course: 220, crossing: ["33", "15"] }],
+    ["04L", { course: 040 }],
+    ["04R", { course: 040, crossing: ["33", "15"] }],
+    ["22R", { course: 220 }],
+    ["33", { course: 325, crossing: ["22L", "04R"] }],
+]);
+
 const arrPrio = [
-    { id: "15", course: 145 },
-    { id: "22L", course: 220 },
-    { id: "04L", course: 040 },
-    { id: "04R", course: 040 },
-    { id: "22R", course: 220 },
-    { id: "33", course: 325 },
+    "15",
+    "22L",
+    "04L", ,
+    "04R",
+    "22R",
+    "33",
 ];
 
 const depPrio = [
-    { id: "22R", course: 220 },
-    { id: "22L", course: 220 },
-    { id: "04R", course: 040 },
-    { id: "33", course: 325 },
-    { id: "04L", course: 040 },
-    { id: "15", course: 145 },
+    "22R",
+    "22L",
+    "04R",
+    "33",
+    "04L",
+    "15",
 ];
 
-const isRwyAvailable = (dir, rwy, windDir, windSpeed) => {
-    const toRadians = (angle) => angle * (Math.PI / 180);
+const isRwyAvailable = (dir, rwyId, windDir, windSpeed, otherRwys) => {
+    const toRadians = angle => angle * (Math.PI / 180);
 
-    const crossWind = Math.abs(windSpeed * Math.sin(toRadians(windDir) - toRadians(rwy.course)));
+    const rwyProps = rwys.get(rwyId);
+
+    if (otherRwys && rwyProps.crossing) {
+        const crossing = rwyProps.crossing.find(crossingId => otherRwys.find(otherId => otherId === crossingId));
+
+        if (crossing) {
+            console.log(`Runway ${rwyId} crossing with ${crossing}`);
+            return false;
+        }
+    }
+
+    const crossWind = Math.abs(windSpeed * Math.sin(toRadians(windDir) - toRadians(rwyProps.course)));
 
     if (crossWind >= maxCrossWindComponent) {
-        console.log(`Too high crosswind for ${rwy.id}`);
+        console.log(`Too high crosswind for ${rwyId}`);
         return false;
     }
 
-    const headWind = windSpeed * Math.cos(toRadians(windDir) - toRadians(rwy.course));
+    const headWind = windSpeed * Math.cos(toRadians(windDir) - toRadians(rwyProps.course));
 
     if (headWind <= -maxTailWindComponent) {
-        console.log(`Too high headwind for ${rwy.id}`);
+        console.log(`Too high headwind for ${rwyId}`);
         return false;
     }
 
-    console.log(`Rwy ${rwy.id} ` +
-        `(${rwy.course} deg) selected for ${dir} ` +
+    console.log(`Rwy ${rwyId} ` +
+        `(${rwyProps.course} deg) selected for ${dir} ` +
         `(CWC ${crossWind.toFixed(1)}kt / HWC ${headWind.toFixed(1)}kt))`);
 
     return true;
@@ -65,10 +85,10 @@ const rwyParser = metar => {
         const winDir = parseInt(windOnly.substring(0, 3));
         const windSpeed = parseInt(windOnly.substring(3, 5));
 
-        const dep = depPrio.find(item => isRwyAvailable('dep', item, winDir, windSpeed));
-        const arr = arrPrio.find(item => isRwyAvailable('arr', item, winDir, windSpeed));
+        const dep = depPrio.find(rwyId => isRwyAvailable('dep', rwyId, winDir, windSpeed));
+        const arr = arrPrio.find(rwyId => isRwyAvailable('arr', rwyId, winDir, windSpeed, [dep]));
 
-        return [dep ? dep.id : '?', arr ? arr.id : '?']
+        return [dep ? dep : '?', arr ? arr : '?']
     }
 
     return null;
