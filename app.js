@@ -22,6 +22,8 @@ const rwyParser = metar => {
 
         if (winDir > 130 && winDir < 240 && windSpeed < 15) {
             return ['22R', '15'];
+        } else {
+            return ['?', '?'];
         }
         // more rules ...
     }
