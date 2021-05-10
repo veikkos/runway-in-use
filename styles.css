@@ -4,9 +4,6 @@ body, html {
 }
 
 .main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
 }
 
@@ -14,20 +11,38 @@ body, html {
     text-align: center;
 }
 
-.content {
+.stack {
     display : block;
 }
 
-.rwys {
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.font-size-large {
     font-size: 500%;
 }
 
-.metar {
+.font-size-medium {
     font-size: 140%;
+}
+
+.font-size-small {
+    font-size: 80%;
 }
 
 .font {
     font-family: 'Signika', sans-serif;
+}
+
+.padding-horizontal-small {
+    padding: 5px;
+}
+
+span.line {
+    display: inline-block;
 }
 
 .footer {

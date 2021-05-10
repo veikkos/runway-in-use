@@ -9,10 +9,18 @@
 </head>
 
 <body>
-  <div class="main">
-    <div class="content">
-      <p id="rwys" class="rwys center font"></p>
-      <p id="metar" class="metar center font"></p>
+  <div class="main row font">
+    <div class="stack">
+      <p class="font-size-large center">
+        <span id="dep" class="line"></span>
+        <span id="arr" class="line"></span>
+      </p>
+      <div class="center">
+        <div class="row">
+          <p id="metar" class="metar"></p>
+          <a href="https://api.met.no/" class="font-size-small padding-horizontal-small">(src)</a>
+        </div>
+      </div>
     </div>
     <div class="footer">
       <a href="https://github.com/veikkos/runway-in-use/">Source code</a>
