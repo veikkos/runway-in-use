@@ -7,8 +7,13 @@ body, html {
     height: 100vh;
 }
 
-.center {
+.center-text {
     text-align: center;
+}
+
+.center {
+    display: block;
+    margin: auto;
 }
 
 .stack {
