@@ -2,17 +2,21 @@ const xhttp = new XMLHttpRequest();
 
 const rwyParser = metar => {
     const windRegex = /[0-9A-Z]*KT/g;
-    const wind = metar.match(windRegex);
+    const windFull = metar.match(windRegex);
 
-    if (wind) {
-        const gustRegex = /(G{1}\d*KT)/g;
-        const gust = wind[0].match(gustRegex);
+    if (windFull) {
+        const gustsRegex = /(G{1}\d*KT)/g;
+        const gustsFull = windFull[0].match(gustsRegex);
+        let gusts;
 
-        if (gust) {
-            console.log("Gusts!");
+        if (gustsFull) {
+            const gustRegex = /\d*/g;
+            gusts = parseInt(gustsFull[0].match(gustRegex)[1]);
+
+            console.log(`Gusts of ${gusts} kt!`);
         }
 
-        const windOnly = wind[0].split(/G|KT/)[0];
+        const windOnly = windFull[0].split(/G|KT/)[0];
         const winDir = parseInt(windOnly.substring(0, 3));
         const windSpeed = parseInt(windOnly.substring(3, 5));
 
