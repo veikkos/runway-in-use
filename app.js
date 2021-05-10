@@ -79,7 +79,7 @@ xhttp.onreadystatechange = function () {
         const parser = new DOMParser();
         const xml = parser.parseFromString(xhttp.responseText, "text/xml");
         const metars = xml.getElementsByTagName("metno:meteorologicalAerodromeReport")
-        const lastMetar = metars[0].getElementsByTagName("metno:metarText")[0].innerHTML.trim();
+        const lastMetar = metars[metars.length - 1].getElementsByTagName("metno:metarText")[0].innerHTML.trim();
 
         document.getElementById("metar").innerHTML = lastMetar;
 
