@@ -2,6 +2,7 @@ const xhttp = new XMLHttpRequest();
 
 const maxCrossWindComponent = 20;
 const maxTailWindComponent = 5;
+const gustLimit = 10;
 
 const rwys = new Map([
     ["15", { course: 145, crossing: ["22L", "04R"] }],
@@ -47,20 +48,20 @@ const isRwyAvailable = (dir, rwyId, windDir, windSpeed, otherRwys) => {
     const crossWind = Math.abs(windSpeed * Math.sin(toRadians(windDir) - toRadians(rwyProps.course)));
 
     if (crossWind >= maxCrossWindComponent) {
-        console.log(`Too high crosswind for ${rwyId}`);
+        console.log(`Too high crosswind (${crossWind.toFixed(1)} kt) for ${rwyId}`);
         return false;
     }
 
     const headWind = windSpeed * Math.cos(toRadians(windDir) - toRadians(rwyProps.course));
 
     if (headWind <= -maxTailWindComponent) {
-        console.log(`Too high headwind for ${rwyId}`);
+        console.log(`Too high tailwind (${-headWind.toFixed(1)} kt) for ${rwyId}`);
         return false;
     }
 
     console.log(`Rwy ${rwyId} ` +
         `(${rwyProps.course} deg) selected for ${dir} ` +
-        `(CWC ${crossWind.toFixed(1)}kt / HWC ${headWind.toFixed(1)}kt))`);
+        `(CWC ${crossWind.toFixed(1)} kt / HWC ${headWind.toFixed(1)} kt))`);
 
     return true;
 }
@@ -70,23 +71,31 @@ const rwyParser = metar => {
     const windFull = metar.match(windRegex);
 
     if (windFull) {
-        const gustsRegex = /(G{1}\d*KT)/g;
-        const gustsFull = windFull[0].match(gustsRegex);
-        let gusts;
+        const getGusts = wind => {
+            const gustsRegex = /(G{1}\d*KT)/g;
+            const gustsFull = wind.match(gustsRegex);
 
-        if (gustsFull) {
-            const gustRegex = /\d*/g;
-            gusts = parseInt(gustsFull[0].match(gustRegex)[1]);
+            if (gustsFull) {
+                const gustRegex = /\d*/g;
+                return parseInt(gustsFull[0].match(gustRegex)[1]);
+            }
 
+            return 0;
+        };
+
+        const gusts = getGusts(windFull[0]);
+
+        if (gusts) {
             console.log(`Gusts of ${gusts} kt!`);
         }
 
         const windOnly = windFull[0].split(/G|KT/)[0];
         const winDir = parseInt(windOnly.substring(0, 3));
         const windSpeed = parseInt(windOnly.substring(3, 5));
+        const windSpeedWithGusts = windSpeed + (gusts >= gustLimit ? (gusts - windSpeed) / 2 : 0);
 
-        const dep = depPrio.find(rwyId => isRwyAvailable('dep', rwyId, winDir, windSpeed));
-        const arr = arrPrio.find(rwyId => isRwyAvailable('arr', rwyId, winDir, windSpeed, [dep]));
+        const dep = depPrio.find(rwyId => isRwyAvailable('dep', rwyId, winDir, windSpeedWithGusts));
+        const arr = arrPrio.find(rwyId => isRwyAvailable('arr', rwyId, winDir, windSpeedWithGusts, [dep]));
 
         return [dep ? dep : '?', arr ? arr : '?']
     }
