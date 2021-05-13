@@ -17,7 +17,7 @@ body, html {
 }
 
 .stack {
-    display : block;
+    display: block;
 }
 
 .row {
@@ -48,6 +48,49 @@ body, html {
 
 span.line {
     display: inline-block;
+}
+
+.map-container {
+    position: relative;
+    width: 717.633px;
+    height: 448.083px;
+    margin: auto;
+}
+
+.icon {
+    display: none;
+    position: absolute;
+    width: 30px;
+}
+
+#zero-four-left {
+    bottom: 60px;
+    left: 16px;
+}
+
+#zero-four-right {
+    bottom: 38px;
+    left: 162px;
+}
+
+#two-two-right {
+    top: 8px;
+    left: 320px;
+}
+
+#two-two-left {
+    top: 22px;
+    right: 0px;
+}
+
+#one-five {
+    top: 22px;
+    right: 165px;
+}
+
+#three-three {
+    bottom: 8px;
+    right: 50px;
 }
 
 .footer {

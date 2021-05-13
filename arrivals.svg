@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="62.506725mm"
+   height="42.572788mm"
+   viewBox="0 0 62.506725 42.572788"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="arrivals.svg"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="144.58055"
+     inkscape:cy="241.34441"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1346"
+     inkscape:window-height="1198"
+     inkscape:window-x="182"
+     inkscape:window-y="163"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-15.030684,-18.64273)">
+    <path
+       id="path3604"
+       style="fill:#000000;stroke-width:0.264583"
+       d="m 15.032023,29.197991 0.734986,14.465829 55.657749,17.272264 c 6.337035,1.966516 8.725429,-7.024687 2.391754,-8.926247 L 53.343847,45.815676 47.226681,19.60076 39.639489,18.64273 39.566025,41.649574 23.917509,36.815107 20.977459,30.935272 15.030684,29.198017 Z"
+       inkscape:export-ydpi="600"
+       sodipodi:nodetypes="ccscccccccc"
+       inkscape:export-filename="D:\Users\jonas\Pictures\arrival.png"
+       inkscape:export-xdpi="600" />
+  </g>
+</svg>

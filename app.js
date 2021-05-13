@@ -5,12 +5,12 @@ const maxTailWindComponent = 5;
 const gustLimit = 10;
 
 const rwys = new Map([
-    ["15", { course: 145, crossing: ["22L", "04R"] }],
-    ["22L", { course: 220, crossing: ["33", "15"] }],
-    ["04L", { course: 040 }],
-    ["04R", { course: 040, crossing: ["33", "15"] }],
-    ["22R", { course: 220 }],
-    ["33", { course: 325, crossing: ["22L", "04R"] }],
+    ["15", { course: 145, crossing: ["22L", "04R"], ui: "one-five" }],
+    ["22L", { course: 220, crossing: ["33", "15"], ui: "two-two-left" }],
+    ["04L", { course: 040, ui: "zero-four-left" }],
+    ["04R", { course: 040, crossing: ["33", "15"], ui: "zero-four-right" }],
+    ["22R", { course: 220, ui: "two-two-right" }],
+    ["33", { course: 325, crossing: ["22L", "04R"], ui: "three-three" }],
 ]);
 
 const arrPrio = [
@@ -112,11 +112,23 @@ xhttp.onreadystatechange = function () {
 
         document.getElementById("metar").innerHTML = lastMetar;
 
-        const rwys = rwyParser(lastMetar);
+        const rwysActive = rwyParser(lastMetar);
 
-        if (rwys) {
-            document.getElementById("dep").innerHTML = `RWY ${rwys[0]} (dep) /`;
-            document.getElementById("arr").innerHTML = `RWY ${rwys[1]} (arr)`;
+        if (rwysActive) {
+            document.getElementById("dep").innerHTML = `RWY ${rwysActive[0]} (dep) /`;
+            document.getElementById("arr").innerHTML = `RWY ${rwysActive[1]} (arr)`;
+
+            const depUi = rwys.get(rwysActive[0]).ui;
+            const arrUi = rwys.get(rwysActive[1]).ui;
+
+            const dep = document.getElementById(depUi);
+            const arr = document.getElementById(arrUi);
+
+            dep.style.display = "block";
+            arr.style.display = "block";
+
+            arr.src = "arrivals.svg";
+            dep.src = "departures.svg";
         }
     }
 };
